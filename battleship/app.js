@@ -31,6 +31,8 @@ var gameState = [
       Patrol Boat - 2 hits
 */
 
+// if we hit, we want to add 5 points. If we miss, we deduct one.
+
 function createGameBoard() {
   var gameBoard = document.getElementById("gameBoard");
   for (var i = 0; i < 10; i++) {
@@ -63,18 +65,22 @@ function populateGameBoard(gameState) {
 function play(cell) {
   var col = cell.getAttribute("col");
   var row = cell.parentElement.getAttribute("row");
+  var score = Number(document.getElementById("score").innerHTML);
 
   if (gameState[row][col] == null) {
     if (shipData[row][col] == "X") {
       alert("Hit!");
       gameState[row][col] = "X";
+      score += 5;
     } else {
       alert("You hit water!");
       gameState[row][col] = "O";
+      score -= 1;
     }
   } else {
     alert("You've already tried this one!");
   }
+  document.getElementById("score").innerHTML = score;
   populateGameBoard(gameState);
 }
 

@@ -66,12 +66,14 @@ function play(cell) {
   var col = cell.getAttribute("col");
   var row = cell.parentElement.getAttribute("row");
   var score = Number(document.getElementById("score").innerHTML);
+  var hits = Number(document.getElementById("hits").innerHTML);
 
   if (gameState[row][col] == null) {
     if (shipData[row][col] == "X") {
       alert("Hit!");
       gameState[row][col] = "X";
       score += 5;
+      hits -= 1;
     } else {
       alert("You hit water!");
       gameState[row][col] = "O";
@@ -81,7 +83,21 @@ function play(cell) {
     alert("You've already tried this one!");
   }
   document.getElementById("score").innerHTML = score;
+  document.getElementById("hits").innerHTML = hits;
   populateGameBoard(gameState);
+  hasGameEnded(hits);
+}
+
+function hasGameEnded(hits) {
+  if (hits === 0) {
+    alert("You won the game");
+    var tds = document.getElementsByTagName("td");
+    for (var i = 0; i < tds.length; i++) {
+      tds[i].onclick = function() {
+        alert("The game has finished!");
+      };
+    }
+  }
 }
 
 window.onload = function() {

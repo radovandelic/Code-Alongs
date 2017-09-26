@@ -10,15 +10,15 @@ var eliumStudents = {
     }
   },
   currentId: 0,
-  getAll: function() {
+  getAll: function(cb) {
     var studentsArray = [];
     for (var id in this.students) {
       studentsArray.push(this.students[id]);
     }
-    return studentsArray;
+    cb(studentsArray);
   },
-  addNewStudent(studentObj) {
-    var message = "Success!";
+  addNewStudent(studentObj, callback) {
+    var errorMessage = null;
     if (
       typeof studentObj.name === "string" &&
       !isNaN(studentObj.age) &&
@@ -30,14 +30,11 @@ var eliumStudents = {
         this.students[this.currentId] = studentObj;
         this.students[this.currentId].id = this.currentId;
       } else {
-        message = "Please enter age and name";
-        return message;
+        errorMessage = "Please enter age and name";
       }
     } else {
-      message = "Invalid entries";
-      return message;
+      errorMessage = "Invalid entries";
     }
-
-    return message;
+    callback(errorMessage);
   }
 };

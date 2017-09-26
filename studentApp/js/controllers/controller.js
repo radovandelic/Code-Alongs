@@ -8,15 +8,18 @@ var controller = {
     this.view[view.name] = view;
   },
   displayStudents: function() {
-    var arr = this.model.eliumStudents.getAll();
-    // arr.forEach(function(element) {
-    //   console.log(element.name);
-    //   console.log(element.age);
-    //   console.log(element.sex);
-    //   console.log(element.country);
-    // });
+    // v;ar arr = this.model.eliumStudents.getAll();
+    // // arr.forEach(function(element) {
+    // //   console.log(element.name);
+    // //   console.log(element.age);
+    // //   console.log(element.sex);
+    // //   console.log(element.country);
+    // // });
 
-    this.view.studentViewer.displayStudents(arr);
+    // this.view.studentViewer.displayStudents(arr)
+    this.model.eliumStudents.getAll(students => {
+      this.view.studentViewer.displayStudents(students);
+    });
   },
   addStudent: function(name, age, sex, country) {
     var studentObj = {
@@ -26,8 +29,13 @@ var controller = {
       country: country
     };
 
-    var message = this.model.eliumStudents.addNewStudent(studentObj);
-    alert(message);
-    this.displayStudents();
+    this.model.eliumStudents.addNewStudent(studentObj, err => {
+      if (err) {
+        alert(err);
+      } else {
+        console.log(this);
+        this.displayStudents();
+      }
+    });
   }
 };

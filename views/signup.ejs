@@ -1,0 +1,26 @@
+<% include header %>
+
+    <% if(errors) { %>
+        <div class="errors">
+            <% for (key in errors) { %>
+                <h4>
+                    <%= key %>:
+                        <span>
+                            <%= errors[key].msg %>
+                        </span>
+                </h4>
+                <% } %>
+        </div>
+        <% } %>
+        <hr>
+            <form action="/auth/signup" method="post">
+                <label for="username">Username:</label>
+                <input type="text" name="username" value="">
+                <label for="password">Password:</label>
+                <input type="password" name="password" value="">
+                <label for="confirm_password">Confirm password:</label>
+                <input type="password" name="confirm_password" value="">
+                <button type="submit">Submit</button>
+            </form>
+
+            <% include footer %>
